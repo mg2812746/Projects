@@ -1,7 +1,7 @@
 /* 
  * File:   main.cpp
  * Author: Miguel Galvez    
- * Created on February 20, 2021
+ * Created on September 1, 2021
  * Purpose:  Compute Monthly Sales Tax
  */
 
@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
     
     //Declare Variables
     char mnth[10];//Month of the Year
-    short int yr;//Year
+    short int yr; //Year
     float totCsh, //Total Amount Collected (USD)
              sls, //Total Sales
           cSlsTx, //County Sales Tax

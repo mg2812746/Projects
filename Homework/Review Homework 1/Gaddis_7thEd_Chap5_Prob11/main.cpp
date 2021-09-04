@@ -1,8 +1,8 @@
 /* 
  * File:   main.cpp
  * Author: Miguel Galvez
- * Created on February 21 2021
- * Purpose: Compute Approximate Population 
+ * Created on September 4 2021
+ * Purpose: Approximate Population 
  */
 
 //System Libraries

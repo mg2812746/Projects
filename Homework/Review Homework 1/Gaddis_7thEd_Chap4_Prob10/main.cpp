@@ -1,7 +1,7 @@
 /* 
  * File:   main.cpp
  * Author: Miguel Galvez
- * Created on February 21 2021
+ * Created on September 4, 2021
  * Purpose: Compute Total Cost of Purchase
  */
 

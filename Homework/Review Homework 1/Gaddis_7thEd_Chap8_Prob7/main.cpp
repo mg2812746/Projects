@@ -1,7 +1,7 @@
 /* 
  * File:   main.cpp
  * Author: Miguel Galvez
- * Created on February 23 2021
+ * Created on September 4 2021
  * Purpose: 
  */
 
@@ -61,10 +61,10 @@ int main(int argc, char** argv) {
 }
 //Binary Search
 int binrySrch(string arr[],const char TOTELM, string fndNme){
-    int fst=0,  // First array element
+    int fst=0,    // First array element
     lst=TOTELM-1, // Last array element
-    mid,        // Midpoint of search
-    pos=-1;   // Position of search value
+    mid,          // Midpoint of search
+    pos=-1;       // Position of search value
     bool fnd = false;   // Flag
     while (!fnd && fst <= lst){
         mid = (fst + lst) / 2;

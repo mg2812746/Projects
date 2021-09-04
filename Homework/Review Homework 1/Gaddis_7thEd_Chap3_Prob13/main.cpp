@@ -1,7 +1,7 @@
 /* 
  * File:   main.cpp
  * Author: Miguel Galvez
- * Created on February 20 2021
+ * Created on September 4, 2021
  * Purpose: Compute Property Tax
  */
 

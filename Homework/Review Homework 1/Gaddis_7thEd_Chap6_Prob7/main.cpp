@@ -1,7 +1,7 @@
 /* 
  * File:   main.cpp
  * Author: Miguel Galvez
- * Created on February 22 2021
+ * Created on September 4 2021
  * Purpose: Convert From Fahrenheit to Celsius
  */
 
@@ -24,15 +24,15 @@ int main(int argc, char** argv) {
     //Declare Constant
     const int MAX=21;  //Maximum Total of Loops Desired
     //Declare Variables
-    float fhrenht,  //Fahrenheit Temperature
-          clsius;   //Celsius Temperature
+    float fhrenht,     //Temperature in Fahrenheit
+          clsius;      //Temperature in Celsius 
     //Initialize Variables
     
     //Map Inputs to Outputs -> Process
     
     
     //Display Inputs/Outputs
-    for(int i=0; i<MAX;i++){
+    for(int i=0;i<MAX;i++){
         fhrenht = i;
         clsius = celsius(fhrenht);
         cout<<fixed<<setprecision(2)

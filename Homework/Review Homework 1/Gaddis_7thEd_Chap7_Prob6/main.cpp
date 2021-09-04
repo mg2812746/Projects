@@ -1,7 +1,7 @@
 /* 
  * File:   main.cpp
  * Author: Miguel Galvez
- * Created on February 22 2021
+ * Created on September 4 2021
  * Purpose: Determine Lowest/Highest/Total/Average Number
  */
 
@@ -36,12 +36,11 @@ int main(int argc, char** argv) {
     cin>>iflnm;
     tot=0;
     avg=0;
- 
     //Map Inputs to Outputs -> Process
     inFile.open(iflnm); //Open File
     //Initialize Accumulator
     totNum=0;
-    //Read&Write File Into Array
+    //Read&Write File Into Array 
     while(!inFile.eof()){
         inFile>>arNum[totNum];
         totNum++;
@@ -78,7 +77,5 @@ void selctSrt(float arNum[], int totNum){
         }
         arNum[minIndx]=arNum[strt];
         arNum[strt]=minVal;
-    }
-            
-            
+    }         
 }
