@@ -2,7 +2,7 @@
  * File:   main.cpp
  * Author: Miguel Galvez
  * Created on September 4 2021
- * Purpose: Approximate Population 
+ * Purpose: Approximate Total Population 
  */
 
 //System Libraries

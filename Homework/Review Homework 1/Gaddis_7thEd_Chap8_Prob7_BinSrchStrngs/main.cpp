@@ -2,7 +2,7 @@
  * File:   main.cpp
  * Author: Miguel Galvez
  * Created on September 4 2021
- * Purpose: 
+ * Purpose: Search an Array of Strings
  */
 
 //System Libraries
