@@ -1,0 +1,3 @@
+Hello World!
+This is a test file for my homework.
+My progRam sHouLD be able to rEaD this and convert appropriately.
