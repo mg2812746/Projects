@@ -2,7 +2,7 @@
  * File:   main.cpp
  * Author: Miguel Galvez
  * Created on October 29th 2021, 7:22PM
- * Purpose: To Play Uno 
+ * Purpose: Version 1 includes defining a set of uno cards.  
  */
 
 //System Libraries Here
