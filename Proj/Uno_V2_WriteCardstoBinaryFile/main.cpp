@@ -45,15 +45,15 @@ int main(int argc, char** argv) {
     srand(static_cast<unsigned int>(time(0)));
     //Declare all Variables Here
     const unsigned short SZE=108;    //Size of Uno Deck
-    fstream out;         //File where deck of uno cards will be written
-    fstream in;          //File where deck of uno cards will be read
-    Uno deck[SZE];       //deck of uno cards
+    fstream out;        //File where deck of uno cards will be written
+    fstream in;         //File where deck of uno cards will be read
+    Uno deck[SZE];      //deck of uno cards
     Uno *fSet;          //Deck of Uno Cards read from uno deck file
     Uno *player;        //Pointer to player's hand of uno cards
     //Input or initialize values Here
-    //fSet=cards(SZE,CLR);    //Dynamically create memory for deck from file
-    //player=cards(SZE,CLR);  //Dynamically create memory for player's hand
-    define(deck);           //Define each uno card
+    fSet=cards(SZE);    //Dynamically create memory for deck from file
+    player=cards(SZE);  //Dynamically create memory for player's hand
+    define(deck);       //Define each uno card
     //Create player's hand of uno cards 
     //Write cards to binary file
     for(int i=ZERO;i<SZE;i++){
@@ -61,13 +61,13 @@ int main(int argc, char** argv) {
         cout<<"value "<<deck[i].value<<endl;
     }
     //Cleanup
-    //destroy(player);
-    //destroy(fSet);
+    destroy(player);
+    destroy(fSet);
     //Exit
     return 0;
 }
 //Creates a deck of uno cards
-Uno *cards(short SZE,short CLR){
+Uno *cards(short SZE){
     Uno *ptr;
     ptr=new Uno[SZE];
     return ptr;
