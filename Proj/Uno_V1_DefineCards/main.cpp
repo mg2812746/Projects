@@ -130,7 +130,8 @@ int main(int argc, char** argv) {
     for(int i=0;i<set->size;i++){
         delete [] set->all[i].color;
     }
-    delete [] set;
+    delete [] set->all;
+    delete set;
     return 0;
 }
 

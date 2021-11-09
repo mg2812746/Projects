@@ -1,23 +1,24 @@
 /* 
  * File:   main.cpp
  * Author: Miguel Galvez
- * Created on October 29th 2021, 7:22PM
- * Purpose: Version 2 had to remodel my structures since I cannot 
- *          write structures containing pointers to binary files.
+ * Created on November 8th 2021, 10:14PM
+ * Purpose: Implement Version 1 into functions
  */
 
 //System Libraries Here
-#include <cstdlib>  //rand()
 #include <iostream> //cin,cout,endl
 #include <cstring>  //strcpy, strstr
 #include <iomanip>  //setprecision,fixed,showpoint
-#include <fstream>  //fstream,ios::binary|ios::in|ios::out
 using namespace std;
 //User Libraries Here
 //Structures
-struct Uno{                 //A single Uno Card
-    char color;             //Color associated with uno card
+struct Uno{                 //Deck of Uno Cards
+    char *color;            //Color associated with uno card
     unsigned short value;   //Value associated with the card
+};
+struct Deck{        //Structure of structure containing deck of uno cards
+    unsigned short size;        //Size of Uno Deck
+    Uno *all;                   //Data of all uno cards
 };
 //Global Constants Only, No Global Variables
 //Like PI, e, Gravity, or conversions
@@ -28,131 +29,122 @@ enum Values{        //Card Values
     REVERSE,        //Reverse The Turn Order
     DRAW,           //Next Person Draws a Card
     WILD,           //Wildcard
-    DRAWWILD,       //Wildcard Draw +4 Cards
-    RED,            //Red (15) + 32 = 0 (ascii)
-    BLUE,           //Blue (16)+ 32 = 1 (ascii)
-    GREEN,          //Green (17)+ 32 = 2 (ascii)
-    YELLOW,         //Yellow (18)+ 32 = 3 (ascii)
-    BLACK           //Black (19)+ 32 = 4 (ascii)
+    DRAWWILD        //Wildcard Draw +4 Cards
 };
 //Function Prototypes Here
-Uno *cards(short);   //Creates a pointer to dynamically allocated deck
-void define(Uno []);        //Define each card according to color
-void destroy(Uno *);       //Deallocate memory
+Deck *create();
+void define(Deck *);
+void destroy(Deck *);
 //Program Execution Begins Here
 int main(int argc, char** argv) {
-    //Set random seed generator
-    srand(static_cast<unsigned int>(time(0)));
     //Declare all Variables Here
-    const unsigned short SZE=108;    //Size of Uno Deck
-    fstream out;        //File where deck of uno cards will be written
-    fstream in;         //File where deck of uno cards will be read
-    Uno deck[SZE];      //deck of uno cards
-    Uno *fSet;          //Deck of Uno Cards read from uno deck file
-    Uno *player;        //Pointer to player's hand of uno cards
+    Deck *set;            //Pointer to deck of uno cards
     //Input or initialize values Here
-    fSet=cards(SZE);    //Dynamically create memory for deck from file
-    player=cards(SZE);  //Dynamically create memory for player's hand
-    define(deck);       //Define each uno card
-    //Create player's hand of uno cards 
-    //Write cards to binary file
-    for(int i=ZERO;i<SZE;i++){
-        cout<<"color "<<deck[i].color+0<<endl;
-        cout<<"value "<<deck[i].value<<endl;
+    set=create();
+    //Define Uno Cards
+    define(set);
+    //Display Uno Cards
+    for(int i=0;i<set->size;i++){
+        cout<<"Card: "<<i<<endl
+            <<"Color: "<<set->all[i].color<<endl
+            <<"Value: "<<set->all[i].value<<endl;
     }
-    //Write Uno Card Deck to File
-    out.open("unoCards.dat",ios::out|ios::binary);
-    out.write(static_cast<char*>(deck),sizeof(deck)*SZE);
-    out.close();
-    //Read Uno Card Deck to a separate Uno structure
-    in.open("unoCards.dat",ios::in|ios::binary);
     //Cleanup
-    destroy(player);
-    destroy(fSet);
+    destroy(set);
     //Exit
     return 0;
 }
-//Creates a deck of uno cards
-Uno *cards(short SZE){
-    Uno *ptr;
-    ptr=new Uno[SZE];
-    return ptr;
+Deck *create(){
+    Deck *set;
+    //Dynamically Create Deck of Uno Cards
+    set=new Deck;
+    set->size=108;
+    set->all=new Uno [set->size];
+    //Dynamically Create size of strings in Uno Cards
+    for(int i=0;i<set->size;i++){
+        set->all[i].color=new char [8];
+    }
+    return set;
 }
-void define(Uno set[]){
-    for(int i=0;i<108;i++){
+void define(Deck *set){
+    //Define set of Uno cards
+    for(int i=0;i<set->size;i++){
         //First 25 cards are Green
         if(i<25){
-            set[i].color=GREEN;
-            i==ZERO?set[i].value=ZERO:
-            i<=TWO?set[i].value=ONE:
-            i<=FOUR?set[i].value=TWO:
-            i<=SIX?set[i].value=THREE:
-            i<=EIGHT?set[i].value=FOUR:
-            i<=10?set[i].value=FIVE:
-            i<=12?set[i].value=SIX:
-            i<=14?set[i].value=SEVEN:
-            i<=16?set[i].value=EIGHT:
-            i<=18?set[i].value=NINE:
-            i<=20?set[i].value=SKIP:
-            i<=22?set[i].value=REVERSE:
-            set[i].value=DRAW;
+            strcpy(set->all[i].color, "Green");
+            i==ZERO?set->all[i].value=ZERO:
+            i<=TWO?set->all[i].value=ONE:
+            i<=FOUR?set->all[i].value=TWO:
+            i<=SIX?set->all[i].value=THREE:
+            i<=EIGHT?set->all[i].value=FOUR:
+            i<=10?set->all[i].value=FIVE:
+            i<=12?set->all[i].value=SIX:
+            i<=14?set->all[i].value=SEVEN:
+            i<=16?set->all[i].value=EIGHT:
+            i<=18?set->all[i].value=NINE:
+            i<=20?set->all[i].value=SKIP:
+            i<=22?set->all[i].value=REVERSE:
+            set->all[i].value=DRAW;
         //Next 25 are Blue
         }else if(i<50){
-            set[i].color=BLUE;
-            i==25?set[i].value=ZERO:
-            i<=27?set[i].value=ONE:
-            i<=29?set[i].value=TWO:
-            i<=31?set[i].value=THREE:
-            i<=33?set[i].value=FOUR:
-            i<=35?set[i].value=FIVE:
-            i<=37?set[i].value=SIX:
-            i<=39?set[i].value=SEVEN:
-            i<=41?set[i].value=EIGHT:
-            i<=43?set[i].value=NINE:
-            i<=45?set[i].value=SKIP:
-            i<=47?set[i].value=REVERSE:
-            set[i].value=DRAW;
+            strcpy(set->all[i].color, "Blue");
+            i==25?set->all[i].value=ZERO:
+            i<=27?set->all[i].value=ONE:
+            i<=29?set->all[i].value=TWO:
+            i<=31?set->all[i].value=THREE:
+            i<=33?set->all[i].value=FOUR:
+            i<=35?set->all[i].value=FIVE:
+            i<=37?set->all[i].value=SIX:
+            i<=39?set->all[i].value=SEVEN:
+            i<=41?set->all[i].value=EIGHT:
+            i<=43?set->all[i].value=NINE:
+            i<=45?set->all[i].value=SKIP:
+            i<=47?set->all[i].value=REVERSE:
+            set->all[i].value=DRAW;
         //Next 25 are Red
         }else if(i<75){
-            set[i].color=RED;
-            i==50?set[i].value=ZERO:
-            i<=52?set[i].value=ONE:
-            i<=54?set[i].value=TWO:
-            i<=56?set[i].value=THREE:
-            i<=58?set[i].value=FOUR:
-            i<=60?set[i].value=FIVE:
-            i<=62?set[i].value=SIX:
-            i<=64?set[i].value=SEVEN:
-            i<=66?set[i].value=EIGHT:
-            i<=68?set[i].value=NINE:
-            i<=70?set[i].value=SKIP:
-            i<=72?set[i].value=REVERSE:
-            set[i].value=DRAW;
+            strcpy(set->all[i].color, "Red");
+            i==50?set->all[i].value=ZERO:
+            i<=52?set->all[i].value=ONE:
+            i<=54?set->all[i].value=TWO:
+            i<=56?set->all[i].value=THREE:
+            i<=58?set->all[i].value=FOUR:
+            i<=60?set->all[i].value=FIVE:
+            i<=62?set->all[i].value=SIX:
+            i<=64?set->all[i].value=SEVEN:
+            i<=66?set->all[i].value=EIGHT:
+            i<=68?set->all[i].value=NINE:
+            i<=70?set->all[i].value=SKIP:
+            i<=72?set->all[i].value=REVERSE:
+            set->all[i].value=DRAW;
         //Next 25 are Yellow
         }else if(i<100){
-            set[i].color=YELLOW;
-            i==75?set[i].value=ZERO:
-            i<=77?set[i].value=ONE:
-            i<=79?set[i].value=TWO:
-            i<=81?set[i].value=THREE:
-            i<=83?set[i].value=FOUR:
-            i<=85?set[i].value=FIVE:
-            i<=87?set[i].value=SIX:
-            i<=89?set[i].value=SEVEN:
-            i<=91?set[i].value=EIGHT:
-            i<=93?set[i].value=NINE:
-            i<=95?set[i].value=SKIP:
-            i<=97?set[i].value=REVERSE:
-            set[i].value=DRAW;
+            strcpy(set->all[i].color, "Yellow");
+            i==75?set->all[i].value=ZERO:
+            i<=77?set->all[i].value=ONE:
+            i<=79?set->all[i].value=TWO:
+            i<=81?set->all[i].value=THREE:
+            i<=83?set->all[i].value=FOUR:
+            i<=85?set->all[i].value=FIVE:
+            i<=87?set->all[i].value=SIX:
+            i<=89?set->all[i].value=SEVEN:
+            i<=91?set->all[i].value=EIGHT:
+            i<=93?set->all[i].value=NINE:
+            i<=95?set->all[i].value=SKIP:
+            i<=97?set->all[i].value=REVERSE:
+            set->all[i].value=DRAW;
         //Last 8 are Black wildcards
         }else{
-            set[i].color=BLACK;
-            i<=103?set[i].value=WILD:
-            set[i].value=DRAWWILD;
+            strcpy(set->all[i].color, "Black");
+            i<=103?set->all[i].value=WILD:
+            set->all[i].value=DRAWWILD;
         }
     }
 }
-void destroy(Uno *set){
+void destroy(Deck *set){
+    for(int i=0;i<set->size;i++){
+        delete [] set->all[i].color;
+    }
+    delete [] set->all;
     delete [] set;
-    delete set;
 }
