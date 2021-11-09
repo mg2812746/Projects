@@ -60,6 +60,12 @@ int main(int argc, char** argv) {
         cout<<"color "<<deck[i].color+0<<endl;
         cout<<"value "<<deck[i].value<<endl;
     }
+    //Write Uno Card Deck to File
+    out.open("unoCards.dat",ios::out|ios::binary);
+    out.write(static_cast<char*>(deck),sizeof(deck)*SZE);
+    out.close();
+    //Read Uno Card Deck to a separate Uno structure
+    in.open("unoCards.dat",ios::in|ios::binary);
     //Cleanup
     destroy(player);
     destroy(fSet);
