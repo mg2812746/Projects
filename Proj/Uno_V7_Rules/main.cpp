@@ -2,9 +2,8 @@
  * File:   main.cpp
  * Author: Miguel Galvez
  * Created on October 29th 2021, 7:22PM
- * Purpose: In this version we will begin to create a display 
- *          to the players showing their cards. In addition, we
- *          will display 
+ * Purpose: Now we will create rules that we need
+ *          in order to play uno
  */
 
 //System Libraries Here
@@ -37,11 +36,12 @@ enum Values{        //Card Values
 //Function Prototypes Here
 void create(Deck&,Deck&,short);
 void define(Deck *);
-void destroy(Deck&,Deck&);
+void destroy(Deck&,Deck&,Deck&,Deck&);
 void display(Deck *);
+void draw(bool [],short,Uno &,Deck);
 void wrteRd(Deck &set,Deck &fSet,fstream &out,
         fstream &in);
-void svnCrds(Deck&,Deck,bool [],short);
+void svnCrds(Deck&,Deck&,Deck,bool [],short);
 //Program Execution Begins Here
 int main(int argc, char** argv) {
     //Set Random Number Generator Seed
@@ -57,13 +57,13 @@ int main(int argc, char** argv) {
     Deck plr1;      //Player 1
     Deck plr2;      //Player 2
     Uno pile;       //Current card on the pile
-    string input;   //user input
+    int input;   //user input
     //Display Uno game header
     cout<<"Welcome to the game of Uno! "<<endl
         <<"Enter 0 to begin, or anything else to "
         <<"end this program. ";
     cin>>input;
-    if(input[0]==48){
+    if(input==0){
         //Dynamically Allocate Memory for Deck and Players
         create(set,fSet,SZE);
         create(plr1,plr2,PLR);
@@ -76,44 +76,37 @@ int main(int argc, char** argv) {
         for(int i=0;i<SZE;i++)
             stat[i]=1;
         //Draw cards from fSet into Players
-        svnCrds(plr1,fSet,stat,SZE);
-        svnCrds(plr2,fSet,stat,SZE);
-        //Draw a card for the pile
-        unsigned int indx=rand()%SZE;
-        //Keep trying random number until unique
-        while(!stat[indx])
-            indx=rand()%SZE;
-        //Copy Contents from index in deck to pile
-        strcpy(pile.color,fSet.all[indx].color);
-        pile.value=fSet.all[indx].value;
-        //Falsify index in bool array
-        stat[indx]=0;
+        svnCrds(plr1,plr2,fSet,stat,SZE);
+        //Draw a card for pile
+        draw(stat,SZE,pile,fSet);
         //Show player 1's hands
         cout<<"Player 1's hand: "<<endl;
-        cout<<left<<setw(9)<<"Card  #:" 
-            <<setw(10)<<"Color"<<setw(5)
-            <<"Value"<<endl;
-        for(int i=0;i<plr1.size;i++){
-            cout<<setw(6)<<"Card "<<i+1<<": " 
-                <<setw(10)<<plr1.all[i].color<<setw(5)
-                <<plr1.all[i].value<<endl;
-        }
-        //Display Card on Top of Pile
+        display(&plr1);
+        //Display card on top of pile
         cout<<"Card on top of pile: "
             <<setw(10)<<pile.color<<setw(5)<<pile.value<<endl;
-        //Display player 2's hand
-        cout<<"Player 2's hand: "<<endl;
-        cout<<left<<setw(9)<<"Card  #:" 
-            <<setw(10)<<"Color"<<setw(5)
-            <<"Value"<<endl;
-        for(int i=0;i<plr2.size;i++){
-            cout<<setw(6)<<"Card "<<i+1<<": " 
-                <<setw(10)<<plr2.all[i].color<<setw(5)
-                <<plr2.all[i].value<<endl;
+        //Prompt player 1 for an applicable card to throw to the pile
+        //Otherwise draw a card
+        cout<<"Enter the card # to throw to the pile. "<<endl;
+        cin>>input;
+        //Input Validation
+        while(input>plr1.size){
+            cout<<"Error: enter a valid number."<<endl;
+            cout<<"Enter the card # to throw to the pile. "<<endl;
+            cin>>input;
         }
+        //If card is valid, toss card onto pile
+        if(plr1.all[input].color==pile.color){
+            string temp;
+            int x;
+            
+        }
+        //Otherwise
+        //Display player 2's hand
+        cout<<"Player 2's hand: "<<endl;   
+        display(&plr2);
     //Cleanup
-    destroy(set,fSet);
-    destroy(plr1,plr2);
+    destroy(set,fSet,plr1,plr2);
     }
     //Exit
     return 0;
@@ -199,16 +192,40 @@ void define(Deck *x){
         }
     }
 }
-void destroy(Deck &set,Deck &fSet){
+void destroy(Deck &set,Deck &fSet,Deck &plr1,
+                Deck &plr2){
     delete [] set.all;
     delete [] fSet.all;
+    delete [] plr1.all;
+    delete [] plr2.all;
 }
 void display(Deck *x){
+    cout<<left<<setw(9)<<"Card  #:" 
+            <<setw(10)<<"Color"<<setw(5)
+            <<"Value"<<endl;
     for(int i=0;i<x->size;i++){
-        cout<<"Card: "<<i<<endl
-            <<"Color: "<<x->all[i].color<<endl
-            <<"Value: "<<x->all[i].value<<endl;
+        cout<<setw(6)<<"Card "<<i+1<<": " 
+            <<setw(10)<<x->all[i].color
+            <<setw(5);
+            x->all[i].value==SKIP?cout<<"SKIP"<<endl:
+            x->all[i].value==REVERSE?cout<<"REVERSE"<<endl:
+            x->all[i].value==DRAW?cout<<"DRAW +1"<<endl:
+            x->all[i].value==WILD?cout<<"WILDCARD"<<endl:
+            x->all[i].value==DRAWWILD?cout<<"DRAW+4"<<endl:
+            cout<<x->all[i].value<<endl;
     }
+}
+void draw(bool stat[],short SZE,Uno &pile,Deck fSet){
+    //Draw a card for the pile
+    unsigned int indx=rand()%SZE;
+    //Keep trying random number until unique
+    while(!stat[indx])
+        indx=rand()%SZE;
+    //Copy Contents from index in deck to player 1 hand
+        strcpy(pile.color,fSet.all[indx].color);
+        pile.value=fSet.all[indx].value;
+    //Falsify index in bool array
+    stat[indx]=0;
 }
 void wrteRd(Deck &set,Deck &fSet,fstream &out,
         fstream &in){
@@ -221,19 +238,34 @@ void wrteRd(Deck &set,Deck &fSet,fstream &out,
     in.read(reinterpret_cast<char *>(&fSet),sizeof(fSet)*fSet.size);
     in.close();
 }
-void svnCrds(Deck &plr,Deck fSet,bool stat[],short SZE){
+void svnCrds(Deck &plr1,Deck &plr2,Deck fSet,
+                bool stat[],short SZE){
     //Players start off with 0 cards
-    plr.size=0;
+    plr1.size=0;
     unsigned int indx=rand()%SZE;
     for(int i=0;i<7;i++){
         //Keep trying random number until unique
         while(!stat[indx])
             indx=rand()%SZE;
         //Increment hand size
-        plr.size++;
+        plr1.size++;
         //Copy Contents from index in deck to player 1 hand
-        strcpy(plr.all[i].color,fSet.all[indx].color);
-        plr.all[i].value=fSet.all[indx].value;
+        strcpy(plr1.all[i].color,fSet.all[indx].color);
+        plr1.all[i].value=fSet.all[indx].value;
+        //Falsify index in bool array
+        stat[indx]=0;
+    }
+    plr2.size=0;
+    indx=rand()%SZE;
+    for(int i=0;i<7;i++){
+        //Keep trying random number until unique
+        while(!stat[indx])
+            indx=rand()%SZE;
+        //Increment hand size
+        plr2.size++;
+        //Copy Contents from index in deck to player 1 hand
+        strcpy(plr2.all[i].color,fSet.all[indx].color);
+        plr2.all[i].value=fSet.all[indx].value;
         //Falsify index in bool array
         stat[indx]=0;
     }
