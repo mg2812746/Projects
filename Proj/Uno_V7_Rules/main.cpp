@@ -10,8 +10,8 @@
 #include <iostream> //cin,cout,endl
 #include <cstring>  //strcpy, strstr
 #include <iomanip>  //xprecision,fixed,showpoint
-#include <fstream>
-#include <valarray>  //file operations
+#include <fstream>  //file operations
+#include <valarray>  
 using namespace std;
 //User Libraries Here
 //Structures
@@ -31,7 +31,7 @@ enum Values{        //Card Values
     SKIP,           //Skip Next Player's Turn
     REVERSE,        //Reverse The Turn Order
     DRAW,           //Next Person Draws a Card
-    WILD,           //Wildcard
+    WILD,           //Wildcard (Pick a color)
     DRAWWILD        //Wildcard Draw +4 Cards
 };
 //Function Prototypes Here
@@ -68,7 +68,6 @@ int main(int argc, char** argv) {
         <<"end this program. ";
     cin>>input;
     if(input==0){
-        
         //Dynamically Allocate Memory for Deck and Players
         create(set,fSet,SZE);
         create(plr1,plr2,PLR);
@@ -93,22 +92,58 @@ int main(int argc, char** argv) {
         show(&pile);
         //Prompt player 1 for an applicable card to throw to the pile
         //Otherwise draw a card
-        cout<<"Enter the card # to throw to the pile. "<<endl;
+        cout<<"Enter the card # to throw to the pile. "<<endl
+            <<"Otherwise, enter 100 to draw";
         cin>>input;
-        //Input Validation
-        while(input>plr1.size){
+        //Input Validation 
+        while(input!=100&&strcmp(plr1.all[input].color,pile.color)
+                &&plr1.all[input].value!=pile.value){
             cout<<"Error: enter a valid number."<<endl;
-            cout<<"Enter the card # to throw to the pile. "<<endl;
+            cout<<"Enter the card # to throw to the pile. "<<endl
+                <<"Otherwise, enter 100 to draw";
             cin>>input;
         }
         //If card is valid, toss card onto pile
-        if(!strcmp(plr1.all[input].color,pile.color)){
+        if(plr1.all[input].value==SKIP){
             //Assign color from player's hand to pile
             strcpy(pile.color,plr1.all[input].color);
             //Assign value from player's hand to pile
             pile.value=plr1.all[input].value;
             //Remove card from player's hand
-            for(int i=input-1;i<plr1.size;i++){
+            for(int i=input;i<plr1.size;i++){
+            strcpy(plr1.all[i].color,plr1.all[i+1].color); 
+            plr1.all[i].value=plr1.all[i+1].value;
+            }
+            plr1.size--;
+        }else if(plr1.all[input].value==REVERSE){
+            //Assign color from player's hand to pile
+            strcpy(pile.color,plr1.all[input].color);
+            //Assign value from player's hand to pile
+            pile.value=plr1.all[input].value;
+            //Remove card from player's hand
+            for(int i=input;i<plr1.size;i++){
+            strcpy(plr1.all[i].color,plr1.all[i+1].color); 
+            plr1.all[i].value=plr1.all[i+1].value;
+            }
+            plr1.size--;
+        }else if(plr1.all[input].value==DRAW){
+            //Assign value from player's hand to pile
+            pile.value=plr1.all[input].value;
+            //Assign color from player's hand to pile
+            strcpy(pile.color,plr1.all[input].color);
+            //Remove card from player's hand
+            for(int i=input;i<plr1.size;i++){
+            strcpy(plr1.all[i].color,plr1.all[i+1].color); 
+            plr1.all[i].value=plr1.all[i+1].value;
+            }
+            plr1.size--;
+        }else if(!strcmp(plr1.all[input].color,pile.color)){
+            //Assign color from player's hand to pile
+            strcpy(pile.color,plr1.all[input].color);
+            //Assign value from player's hand to pile
+            pile.value=plr1.all[input].value;
+            //Remove card from player's hand
+            for(int i=input;i<plr1.size;i++){
             strcpy(plr1.all[i].color,plr1.all[i+1].color); 
             plr1.all[i].value=plr1.all[i+1].value;
             }
@@ -120,23 +155,45 @@ int main(int argc, char** argv) {
             //Assign value from player's hand to pile
             pile.value=plr1.all[input].value;
             //Remove card from player's hand
-            for(int i=input-1;i<plr1.size;i++){
+            for(int i=input;i<plr1.size;i++){
             strcpy(plr1.all[i].color,plr1.all[i+1].color); 
             plr1.all[i].value=plr1.all[i+1].value;
             }
             //Decrement plr1's hand size
             plr1.size--;
-        }else if(plr1.all[input].value>NINE){
-            //Assign color from player's hand to pile
-            strcpy(pile.color,plr1.all[input].color);
+        }else if(plr1.all[input].value==WILD){
             //Assign value from player's hand to pile
             pile.value=plr1.all[input].value;
+            //Assign color from player's hand to pile
+            strcpy(pile.color,plr1.all[input].color);
             //Remove card from player's hand
-            for(int i=input-1;i<plr1.size;i++){
+            for(int i=input;i<plr1.size;i++){
             strcpy(plr1.all[i].color,plr1.all[i+1].color); 
             plr1.all[i].value=plr1.all[i+1].value;
             }
             plr1.size--;
+        }else if(plr1.all[input].value==DRAWWILD){
+            //Assign value from player's hand to pile
+            pile.value=plr1.all[input].value;
+            //Assign a color based off player's decision
+            cout<<"Enter :"<<endl
+                <<"1 for yellow\n"
+                <<"2 for green\n"
+                <<"3 for red\n"
+                <<"4 for blue\n";
+            //Remove card from player's hand
+            for(int i=input;i<plr1.size;i++){
+            strcpy(plr1.all[i].color,plr1.all[i+1].color); 
+            plr1.all[i].value=plr1.all[i+1].value;
+            }
+            input==1?strcpy(pile.color,"yellow"):
+            input==2?strcpy(pile.color,"green"):
+            input==3?strcpy(pile.color,"red"):
+            strcpy(pile.color,"blue");
+            plr1.size--;
+        //If player does not meet any case above, it's 100 so draw
+        }else{
+            //This is a stub, will create draw function for next version
         }
         //Display player 2's hand
         cout<<"Player 2's hand: "<<endl;   
@@ -155,13 +212,46 @@ int main(int argc, char** argv) {
             cin>>input;
         }
         //If card is valid, toss card onto pile
-        if(!strcmp(plr2.all[input].color,pile.color)){
+        if(plr2.all[input].value==SKIP){
             //Assign color from player's hand to pile
             strcpy(pile.color,plr2.all[input].color);
             //Assign value from player's hand to pile
             pile.value=plr2.all[input].value;
             //Remove card from player's hand
-            for(int i=input-1;i<plr2.size;i++){
+            for(int i=input;i<plr2.size;i++){
+            strcpy(plr2.all[i].color,plr2.all[i+1].color); 
+            plr2.all[i].value=plr2.all[i+1].value;
+            }
+            plr2.size--;
+        }else if(plr2.all[input].value==REVERSE){
+            //Assign color from player's hand to pile
+            strcpy(pile.color,plr2.all[input].color);
+            //Assign value from player's hand to pile
+            pile.value=plr2.all[input].value;
+            //Remove card from player's hand
+            for(int i=input;i<plr2.size;i++){
+            strcpy(plr2.all[i].color,plr2.all[i+1].color); 
+            plr2.all[i].value=plr2.all[i+1].value;
+            }
+            plr2.size--;
+        }else if(plr2.all[input].value==DRAW){
+            //Assign value from player's hand to pile
+            pile.value=plr2.all[input].value;
+            //Assign color from player's hand to pile
+            strcpy(pile.color,plr2.all[input].color);
+            //Remove card from player's hand
+            for(int i=input;i<plr2.size;i++){
+            strcpy(plr2.all[i].color,plr2.all[i+1].color); 
+            plr2.all[i].value=plr2.all[i+1].value;
+            }
+            plr2.size--;
+        }else if(!strcmp(plr2.all[input].color,pile.color)){
+            //Assign color from player's hand to pile
+            strcpy(pile.color,plr2.all[input].color);
+            //Assign value from player's hand to pile
+            pile.value=plr2.all[input].value;
+            //Remove card from player's hand
+            for(int i=input;i<plr2.size;i++){
             strcpy(plr2.all[i].color,plr2.all[i+1].color); 
             plr2.all[i].value=plr2.all[i+1].value;
             }
@@ -172,19 +262,46 @@ int main(int argc, char** argv) {
             strcpy(pile.color,plr2.all[input].color);
             //Assign value from player's hand to pile
             pile.value=plr2.all[input].value;
+            //Remove card from player's hand
+            for(int i=input;i<plr1.size;i++){
+            strcpy(plr2.all[i].color,plr2.all[i+1].color); 
+            plr2.all[i].value=plr2.all[i+1].value;
+            }
             //Decrement plr1's hand size
             plr2.size--;
-        }else if(plr2.all[input].value>NINE){
-            //Assign color from player's hand to pile
-            strcpy(pile.color,plr2.all[input].color);
+        }else if(plr2.all[input].value==WILD){
             //Assign value from player's hand to pile
             pile.value=plr2.all[input].value;
+            //Assign color from player's hand to pile
+            strcpy(pile.color,plr2.all[input].color);
             //Remove card from player's hand
-            for(int i=input-1;i<plr1.size;i++){
+            for(int i=input;i<plr2.size;i++){
             strcpy(plr2.all[i].color,plr2.all[i+1].color); 
             plr2.all[i].value=plr2.all[i+1].value;
             }
             plr2.size--;
+        }else if(plr1.all[input].value==DRAWWILD){
+            //Assign value from player's hand to pile
+            pile.value=plr1.all[input].value;
+            //Assign a color based off player's decision
+            cout<<"Enter :"<<endl
+                <<"1 for yellow\n"
+                <<"2 for green\n"
+                <<"3 for red\n"
+                <<"4 for blue\n";
+            //Remove card from player's hand
+            for(int i=input;i<plr2.size;i++){
+            strcpy(plr2.all[i].color,plr2.all[i+1].color); 
+            plr2.all[i].value=plr2.all[i+1].value;
+            }
+            input==1?strcpy(pile.color,"yellow"):
+            input==2?strcpy(pile.color,"green"):
+            input==3?strcpy(pile.color,"red"):
+            strcpy(pile.color,"blue");
+            plr2.size--;
+        //If player does not meet any case above, it's 100 so draw
+        }else{
+            
         }
         }
     //Cleanup
@@ -205,11 +322,11 @@ void define(Deck *x){
         //First 25 cards are Green
         if(i<25){
             strcpy(x->all[i].color, "Green");
-            i==ZERO?x->all[i].value=ZERO:
-            i<=TWO?x->all[i].value=ONE:
-            i<=FOUR?x->all[i].value=TWO:
-            i<=SIX?x->all[i].value=THREE:
-            i<=EIGHT?x->all[i].value=FOUR:
+            i==0?x->all[i].value=ZERO:
+            i<=2?x->all[i].value=ONE:
+            i<=4?x->all[i].value=TWO:
+            i<=6?x->all[i].value=THREE:
+            i<=8?x->all[i].value=FOUR:
             i<=10?x->all[i].value=FIVE:
             i<=12?x->all[i].value=SIX:
             i<=14?x->all[i].value=SEVEN:
