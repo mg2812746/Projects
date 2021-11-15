@@ -211,6 +211,11 @@ void toss(Deck &plr,Uno &pile,int input){
 void wild(Deck &plr,Uno &pile,int input){
     //Assign value from player's hand to pile
     pile.value=plr.all[input].value;
+    //Remove card from player's hand
+    for(int i=input;i<plr.size;i++){
+        strcpy(plr.all[i].color,plr.all[i+1].color); 
+        plr.all[i].value=plr.all[i+1].value;
+    }
     //Assign a color based off player's decision
     do{
     cout<<"Enter :"<<endl
@@ -220,11 +225,6 @@ void wild(Deck &plr,Uno &pile,int input){
         <<"4 for blue\n";
     cin>>input;
     }while(input>4||input<0);   //Input validation
-    //Remove card from player's hand
-    for(int i=input;i<plr.size;i++){
-        strcpy(plr.all[i].color,plr.all[i+1].color); 
-        plr.all[i].value=plr.all[i+1].value;
-    }
     input==1?strcpy(pile.color,"Yellow"):
     input==2?strcpy(pile.color,"Green"):
     input==3?strcpy(pile.color,"Red"):

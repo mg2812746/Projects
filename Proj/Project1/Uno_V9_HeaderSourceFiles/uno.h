@@ -13,6 +13,8 @@
 #include <iomanip>  //xprecision,fixed,showpoint
 #include <fstream>  //file operations
 #include <string>   //string class
+#include <ctime>    //time()
+#include <cstdlib>  //rand()
 #include <valarray>  
 using namespace std;
 //User Libraries Here

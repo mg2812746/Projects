@@ -71,10 +71,28 @@ int main(int argc, char** argv) {
                     cin>>input;
                 }
                 //If card is valid, toss card onto pile
-                if(input==100){   
+                while(input==100){   
                     draw1(plr1,fSet,stat,SZE);
+                    //Show player 1's hands
+                    cout<<"Player 1's hand: "<<endl;
+                    display(&plr1);
+                    //Display card on top of pile
+                    cout<<"Card on \ntop \nof pile: ";
+                    show(&pile);
+                    cout<<"Enter the card # to throw to the pile. \n"
+                        <<"Or enter 100 to draw. \n";
+                    cin>>input;
+                    //Input Validation 
+                    while(input!=100&&strcmp(plr1.all[input].color,pile.color)
+                        &&plr1.all[input].value!=pile.value&&
+                        plr1.all[input].value<WILD){
+                        cout<<"Error: enter a valid number."<<endl;
+                        cout<<"Enter the card # to throw to the pile. "<<endl
+                            <<"Otherwise, enter 100 to draw: ";
+                        cin>>input;
+                }
                 //If value is skip and same color as pile
-                }else if(plr1.all[input].value==SKIP&&
+                }if(plr1.all[input].value==SKIP&&
                         !strcmp(plr1.all[input].color,pile.color)){
                     toss(plr1,pile,input);
                     skip=1;     //Set the skip flag
@@ -87,12 +105,6 @@ int main(int argc, char** argv) {
                         !strcmp(plr1.all[input].color,pile.color)){
                     toss(plr1,pile,input);
                     draw1(plr2,fSet,stat,SZE);
-                //If color is the same as pile
-                }else if(!strcmp(plr1.all[input].color,pile.color)){
-                    toss(plr1,pile,input);
-                //If value is the same as pile
-                }else if(plr1.all[input].value==pile.value){
-                    toss(plr1,pile,input);
                 //If value is a wildcard, toss and pick color for pile
                 }else if(plr1.all[input].value==WILD){
                     wild(plr1,pile,input);
@@ -102,6 +114,12 @@ int main(int argc, char** argv) {
                     wild(plr1,pile,input);
                     //Now plr2 needs to draw 4 cards
                     draw4(plr2,fSet,stat,SZE);
+                //If color is the same as pile
+                }else if(!strcmp(plr1.all[input].color,pile.color)){
+                    toss(plr1,pile,input);
+                //If value is the same as pile
+                }else if(plr1.all[input].value==pile.value){
+                    toss(plr1,pile,input);
                 }
             //If skip flag is set, skip player's turn and reset flag
             }else{
@@ -128,9 +146,29 @@ int main(int argc, char** argv) {
                     cin>>input;
                 }   
                 //If card is valid, toss card onto pile
-                if(input==100){
+                while(input==100){
                     draw1(plr2,fSet,stat,SZE);
-                }else if(plr2.all[input].value==SKIP){
+                    //Display player 2's hand
+                    cout<<"Player 2's hand: "<<endl;   
+                    display(&plr2);
+                    //Display top of pile
+                    cout<<"Card on \ntop \nof pile: ";
+                    show(&pile);
+                    cout<<"Enter the card # to throw to the pile. \n"
+                        <<"Or enter 100 to draw. \n";
+                    cin>>input;
+                    //Input Validation
+                    while(input!=100&&strcmp(plr2.all[input].color,pile.color)
+                        &&plr2.all[input].value!=pile.value
+                        &&plr2.all[input].value<WILD){
+                        cout<<"Error: enter a valid number."<<endl;
+                        cout<<"Enter the card # to throw to the pile. \n"
+                            <<"Or enter 100 to draw. \n";
+                        cin>>input;
+                    }   
+                }
+                if(plr2.all[input].value==SKIP&&
+                        !strcmp(plr2.all[input].color,pile.color)){
                     toss(plr2,pile,input);
                     skip=1;     //Set the skip flag
                 //If card is reverse and same color as pile
@@ -143,21 +181,21 @@ int main(int argc, char** argv) {
                     toss(plr2,pile,input);
                     //Make player 1 draw a card
                     draw1(plr1,fSet,stat,SZE);
+                //If card is a wildcard, pick a color for pile
+                }else if(plr2.all[input].value==WILD){
+                    wild(plr2,pile,input);
+                //If card is wildcard draw +4, pick a color for pile
+                //and next player draws 4 cards
+                }else if(plr2.all[input].value==DRAWWILD){
+                    wild(plr2,pile,input);
+                    //Make player 1 draw four cards
+                    draw4(plr1,fSet,stat,SZE);
                 //If card is same color as pile
                 }else if(!strcmp(plr2.all[input].color,pile.color)){
                     toss(plr2,pile,input);
                 //If card is same value as pile
                 }else if(plr2.all[input].value==pile.value){
                     toss(plr2,pile,input);
-                //If card is a wildcard, pick a color for pile
-                }else if(plr2.all[input].value==WILD){
-                    wild(plr2,pile,input);
-                //If card is wildcard draw +4, pick a color for pile
-                //and next player draws 4 cards
-                }else if(plr1.all[input].value==DRAWWILD){
-                    wild(plr2,pile,input);
-                    //Make player 1 draw four cards
-                    draw4(plr1,fSet,stat,SZE);
                 }
             //If skip flag is set, skip player and reset flag
             }else{
