@@ -1,0 +1,36 @@
+\hypertarget{_player_8h_source}{}\doxysection{Player.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ * File:   Player.h}}
+\DoxyCodeLine{3 \textcolor{comment}{ * Author: Miguel Galvez}}
+\DoxyCodeLine{4 \textcolor{comment}{ * Created on December 17, 2021, 9:06 PM}}
+\DoxyCodeLine{5 \textcolor{comment}{ * Purpose: Player Class, an Uno derived class in which }}
+\DoxyCodeLine{6 \textcolor{comment}{ *          the player has access to tossing their cards to a}}
+\DoxyCodeLine{7 \textcolor{comment}{ *          pile, and drawing from a deck of Uno cards.}}
+\DoxyCodeLine{8 \textcolor{comment}{ */}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#ifndef PLAYER\_H}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#define PLAYER\_H}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}Pile.h"{}}   \textcolor{comment}{//Pile class -\/ superclass}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}Deck.h"{}}   \textcolor{comment}{//Deck class -\/ function parameter}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <iomanip>}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include <cstring>}}
+\DoxyCodeLine{17 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{18 \textcolor{keyword}{class }\mbox{\hyperlink{class_player}{Player}}:\textcolor{keyword}{public} \mbox{\hyperlink{class_pile}{Pile}}\{}
+\DoxyCodeLine{19 \textcolor{keyword}{private}:}
+\DoxyCodeLine{20     \textcolor{keywordtype}{bool} skip;      \textcolor{comment}{//Flag -\/ notifies whether or not player is skipped}}
+\DoxyCodeLine{21 \textcolor{keyword}{public}:}
+\DoxyCodeLine{22     \mbox{\hyperlink{class_player}{Player}}();       \textcolor{comment}{//Default Constructor}}
+\DoxyCodeLine{23     \textcolor{keywordtype}{void} draw(\textcolor{keywordtype}{char}*,\textcolor{keywordtype}{int});    \textcolor{comment}{//Draws a card from deck}}
+\DoxyCodeLine{24     \textcolor{keywordtype}{bool} getSkip()\textcolor{keyword}{const}\{\textcolor{keywordflow}{return} skip;\};   \textcolor{comment}{//returns skip}}
+\DoxyCodeLine{25     \textcolor{keywordtype}{void} reset()\{skip=0;\};               \textcolor{comment}{//resets skip flag}}
+\DoxyCodeLine{26     \textcolor{keywordtype}{void} set()\{skip=1;\};                 \textcolor{comment}{//sets skip flag}}
+\DoxyCodeLine{27     \textcolor{keywordtype}{void} hand();                \textcolor{comment}{//Displays the player's hand}}
+\DoxyCodeLine{28     \textcolor{keywordtype}{void} remove(\textcolor{keywordtype}{int});           \textcolor{comment}{//Remove the specified card from player}}
+\DoxyCodeLine{29     \textcolor{keywordtype}{char} *wild();               \textcolor{comment}{//Returns a color depending on player selection}}
+\DoxyCodeLine{30 \};}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* PLAYER\_H */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

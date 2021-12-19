@@ -1,0 +1,32 @@
+\hypertarget{_deck_8h_source}{}\doxysection{Deck.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ * File:   Deck.h}}
+\DoxyCodeLine{3 \textcolor{comment}{ * Author: Miguel Galvez}}
+\DoxyCodeLine{4 \textcolor{comment}{ * Created on December 17, 2021, 8:51 PM}}
+\DoxyCodeLine{5 \textcolor{comment}{ * Purpose: Deck Class, a class that functions to hoard}}
+\DoxyCodeLine{6 \textcolor{comment}{ *          the entire deck of Uno cards.}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#ifndef DECK\_H}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#define DECK\_H}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}Uno.h"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}Pile.h"{}}}
+\DoxyCodeLine{13 \textcolor{keyword}{class }\mbox{\hyperlink{class_deck}{Deck}}:\textcolor{keyword}{public} \mbox{\hyperlink{class_pile}{Pile}}\{}
+\DoxyCodeLine{14     \textcolor{keyword}{private}:}
+\DoxyCodeLine{15         \textcolor{keywordtype}{bool} stat[108];     \textcolor{comment}{//Status of Uno cards in deck}}
+\DoxyCodeLine{16     \textcolor{keyword}{public}:}
+\DoxyCodeLine{17         \mbox{\hyperlink{class_deck}{Deck}}();            \textcolor{comment}{//Default constructor}}
+\DoxyCodeLine{18         \textcolor{keywordtype}{void} define();     \textcolor{comment}{//Defines entire deck of Uno cards}}
+\DoxyCodeLine{19         \textcolor{keywordtype}{void} display();    \textcolor{comment}{//Displays entire deck of Uno cards}}
+\DoxyCodeLine{20         \textcolor{keywordtype}{bool} status(\textcolor{keywordtype}{int});  \textcolor{comment}{//Returns true if card is available, false otherwise    }}
+\DoxyCodeLine{21         \textcolor{keywordtype}{char} *getColor(\textcolor{keywordtype}{int});\textcolor{comment}{//Returns indicated card's color}}
+\DoxyCodeLine{22         \textcolor{keywordtype}{short} getValue(\textcolor{keywordtype}{int});\textcolor{comment}{//Returns value of a card}}
+\DoxyCodeLine{23         \textcolor{keywordtype}{void} falsify(\textcolor{keywordtype}{int});  \textcolor{comment}{//Falsifies indicated index in bool array}}
+\DoxyCodeLine{24         \textcolor{keywordtype}{int} getIndex();     \textcolor{comment}{//Returns a valid index of a card that can be drawn}}
+\DoxyCodeLine{25         \textcolor{keywordtype}{void} reset();       \textcolor{comment}{//resets the stat array}}
+\DoxyCodeLine{26 \};}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* DECK\_H */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

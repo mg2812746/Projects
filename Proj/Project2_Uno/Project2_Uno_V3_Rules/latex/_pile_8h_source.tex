@@ -1,0 +1,37 @@
+\hypertarget{_pile_8h_source}{}\doxysection{Pile.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ * File:   Pile.h}}
+\DoxyCodeLine{3 \textcolor{comment}{ * Author: Miguel Galvez}}
+\DoxyCodeLine{4 \textcolor{comment}{ * Created on December 17, 2021, 9:16 PM}}
+\DoxyCodeLine{5 \textcolor{comment}{ * Purpose: Pile class, a general skeleton of an Uno Pile}}
+\DoxyCodeLine{6 \textcolor{comment}{ *          which can later be used for inheritance}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#ifndef PILE\_H}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#define PILE\_H}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}Uno.h"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{13 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{14 \textcolor{keyword}{class }\mbox{\hyperlink{class_pile}{Pile}}\{}
+\DoxyCodeLine{15 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{16     \mbox{\hyperlink{class_uno}{Uno}} *all;}
+\DoxyCodeLine{17     \textcolor{keywordtype}{short} size;}
+\DoxyCodeLine{18 \textcolor{keyword}{public}:}
+\DoxyCodeLine{19     \mbox{\hyperlink{class_pile}{Pile}}();}
+\DoxyCodeLine{20     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_pile}{\string~Pile}}()\{\textcolor{keyword}{delete} [] all;\};}
+\DoxyCodeLine{21     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} modSize(\textcolor{keywordtype}{short} x)\{size+=x;\};}
+\DoxyCodeLine{22     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} upSize()\{size++;\};}
+\DoxyCodeLine{23     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} downSize()\{size-\/-\/;\};}
+\DoxyCodeLine{24     \textcolor{keyword}{virtual} \textcolor{keywordtype}{short} getSize()\textcolor{keyword}{const}\{\textcolor{keywordflow}{return} size;\};}
+\DoxyCodeLine{25     \textcolor{keyword}{virtual} \textcolor{keywordtype}{short} getTotal()\textcolor{keyword}{const}\{\textcolor{keywordflow}{return} 108;\};}
+\DoxyCodeLine{26     \textcolor{keyword}{virtual} \textcolor{keywordtype}{char} *getColor(\textcolor{keywordtype}{int} i)\{\textcolor{keywordflow}{return} all[i].getColor();\};}
+\DoxyCodeLine{27     \textcolor{keyword}{virtual} \textcolor{keywordtype}{short} getValue(\textcolor{keywordtype}{int} i)\{\textcolor{keywordflow}{return} all[i].getValue();\};}
+\DoxyCodeLine{28     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} add(\textcolor{keywordtype}{char}*,\textcolor{keywordtype}{int});}
+\DoxyCodeLine{29     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} top()\{cout<<getColor(size-\/1)<<\textcolor{stringliteral}{"{} "{}}<<getValue(size)<<endl;\};}
+\DoxyCodeLine{30     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} operator++()\{size++;\}; \textcolor{comment}{//Increments size}}
+\DoxyCodeLine{31 \};}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* PILE\_H */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

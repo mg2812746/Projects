@@ -1,0 +1,46 @@
+\hypertarget{_uno_8h_source}{}\doxysection{Uno.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ * File:   Uno.h}}
+\DoxyCodeLine{3 \textcolor{comment}{ * Author: Miguel Galvez}}
+\DoxyCodeLine{4 \textcolor{comment}{ * Created on December 13, 2021, 3:52 PM}}
+\DoxyCodeLine{5 \textcolor{comment}{ * Purpose: Uno class, create a basic definition/characteristic }}
+\DoxyCodeLine{6 \textcolor{comment}{ *          of an Uno card.}}
+\DoxyCodeLine{7 \textcolor{comment}{ */}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#ifndef UNO\_H}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#define UNO\_H}}
+\DoxyCodeLine{11 \textcolor{comment}{//Enumerated Values}}
+\DoxyCodeLine{12 \textcolor{keyword}{enum} Values\{        \textcolor{comment}{//Card Values}}
+\DoxyCodeLine{13     ZERO,ONE,TWO,THREE,FOUR,    \textcolor{comment}{//0-\/4}}
+\DoxyCodeLine{14     FIVE,SIX,SEVEN,EIGHT,NINE,  \textcolor{comment}{//5-\/9}}
+\DoxyCodeLine{15     SKIP,           \textcolor{comment}{//Skip Next Player's Turn}}
+\DoxyCodeLine{16     REVERSE,        \textcolor{comment}{//Reverse The Turn Order}}
+\DoxyCodeLine{17     DRAW,           \textcolor{comment}{//Next Person Draws a Card}}
+\DoxyCodeLine{18     WILD,           \textcolor{comment}{//Wildcard (Pick a color for pile)}}
+\DoxyCodeLine{19     DRAWWILD        \textcolor{comment}{//Wildcard Draw +4 Cards}}
+\DoxyCodeLine{20 \};}
+\DoxyCodeLine{21 \textcolor{comment}{//Uno Class}}
+\DoxyCodeLine{22 \textcolor{keyword}{class }\mbox{\hyperlink{class_uno}{Uno}}\{}
+\DoxyCodeLine{23 \textcolor{keyword}{private}: }
+\DoxyCodeLine{24     \textcolor{keywordtype}{char} *color;     \textcolor{comment}{//Color associated with Uno card       }}
+\DoxyCodeLine{25     \textcolor{keywordtype}{int} value;       \textcolor{comment}{//Value associated with Uno card}}
+\DoxyCodeLine{26 \textcolor{keyword}{public}:}
+\DoxyCodeLine{27     \mbox{\hyperlink{class_uno}{Uno}}()\{color=\textcolor{keyword}{new} \textcolor{keywordtype}{char} [8];\}      \textcolor{comment}{//Default constructor}}
+\DoxyCodeLine{28     \mbox{\hyperlink{class_uno}{Uno}}(\textcolor{keywordtype}{char} *x,\textcolor{keywordtype}{short} y)\{color=x;   \textcolor{comment}{//Constructor 2 (overloading)}}
+\DoxyCodeLine{29                         value=y;\}   }
+\DoxyCodeLine{30     \mbox{\hyperlink{class_uno}{Uno}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} []);                 \textcolor{comment}{//Copy constructor}}
+\DoxyCodeLine{31     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_uno}{\string~Uno}}()\{\textcolor{keyword}{delete} [] color;\}    \textcolor{comment}{//Destructor                                   }}
+\DoxyCodeLine{32     \textcolor{keywordtype}{void} operator=(\textcolor{keyword}{const} \textcolor{keywordtype}{char}[]);       \textcolor{comment}{//Assign card color to string   }}
+\DoxyCodeLine{33     \textcolor{keywordtype}{void} operator=(\textcolor{keyword}{const} \textcolor{keywordtype}{short} x);      \textcolor{comment}{//Assign value of card}}
+\DoxyCodeLine{34     \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} operator==(\textcolor{keyword}{const} \textcolor{keywordtype}{char} x[]);    \textcolor{comment}{//Assign value of card}}
+\DoxyCodeLine{35     \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} operator==(\textcolor{keyword}{const} \textcolor{keywordtype}{short} x);     \textcolor{comment}{//Assign value of card}}
+\DoxyCodeLine{36     \textcolor{keyword}{virtual} \textcolor{keywordtype}{char} *getColor()\textcolor{keyword}{const}\{\textcolor{keywordflow}{return} color;\};\textcolor{comment}{//get color}}
+\DoxyCodeLine{37     \textcolor{keyword}{virtual} \textcolor{keywordtype}{int} getValue()\{\textcolor{keywordflow}{return} value;\}  \textcolor{comment}{//returns value}}
+\DoxyCodeLine{38     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} setColor(\textcolor{keywordtype}{char} *);         \textcolor{comment}{//Mutator-\/sets color of card}}
+\DoxyCodeLine{39     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} setValue(\textcolor{keywordtype}{int});            \textcolor{comment}{//Mutator-\/sets value of card}}
+\DoxyCodeLine{40 \};}
+\DoxyCodeLine{41 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* UNO\_H */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}
